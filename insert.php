@@ -101,9 +101,9 @@ finally
 
 if (isset($_GET['id'])) {
 try{        
-                
                 $user_id = base64_decode($_GET['id']); 
                 $conn=mysqli_connect("$servername","$username","$password","$dbname");
+    // database select query for employees database..
                 $sqlselect = "SELECT * FROM employees where id='$user_id'";
                 $result=mysqli_query($conn,$sqlselect);
                 $data=mysqli_fetch_assoc($result);
@@ -112,7 +112,17 @@ try{
                 $emailid=$data['emailid'];
                 $mobileno=$data['mobileno'];
                 $photo=$data['photo'];
-                $gender=$data['gender'];  
+                $gender=$data['gender']; 
+    // database select query for qualification database..
+                $sqlselectqualification="SELECT * FROM qualification where emp_id='$user_id'";
+                $result=mysqli_query($conn,$sqlselectqualification);
+                $data=mysqli_fetch_assoc($result);
+                $high_school=$data['high_school'];
+                $intermediate_school=$data['intermediate_school'];
+                $diploma=$data['diploma'];
+                $graduate=$data['graduate'];
+                $masters=$data['masters'];
+
     }
 catch(Exception $e)
     {
@@ -128,7 +138,7 @@ finally
 if (isset($_POST['Update'])) 
 {
 try{   
-         
+            $sqlUpdate="";
             $id=$_POST['id'];
             $firstname=$_POST['fname'];
             $lastname=$_POST['lname'];
@@ -138,11 +148,42 @@ try{
             $tempname=$_FILES['photo']['tmp_name'];
             move_uploaded_file($tempname,"./uplodedimages/".$imagename);
             $gender=$_POST['gender'];
-
-            
+            if(!isset($_POST['high_school'])){
+                $high_school="null";
+                }
+                else{
+                    $high_school=$_POST['high_school'];
+                }
+               
+               if(!isset($_POST['intermediate_school'])){
+                       $intermediate_school="null";
+                }
+                else{
+                    $intermediate_school=$_POST['intermediate_school'];
+                }
+               
+               if(!isset($_POST['diploma'])){
+                $diploma="null";
+                }
+                else{
+                    $diploma=$_POST['diploma'];
+                }
+               
+               if(!isset($_POST['graduate'])){
+                $graduate="null";
+                }
+                else{
+                    $graduate=$_POST['graduate'];
+                }
+               
+               if(!isset($_POST['masters'])){
+                $masters="null";
+                }
+                else{
+                    $masters=$_POST['masters'];
+                }
 
             $conn=mysqli_connect("$servername","$username","$password","$dbname");
-            $sqlUpdate="";
             if($imagename=="")
                {
                 $sqlUpdate="UPDATE employees SET firstname='$firstname',lastname='$lastname',emailid='$emailid',mobileno='$mobileno'
@@ -156,7 +197,10 @@ try{
 
                     if (mysqli_query($conn,$sqlUpdate)) 
                     {
-                        $massage="Employee information Updated";   
+                        $massage="Employee information Updated"; 
+                        $sqlinsertqualification = "UPDATE qualification SET emp_Id='$id',high_school='$high_school'
+                        ,intermediate_school='$intermediate_school',diploma='$diploma',graduate='$graduate',masters='$masters' WHERE emp_id='$id'";
+                         mysqli_query($conn,$sqlinsertqualification);   
                     }
                     else{
 

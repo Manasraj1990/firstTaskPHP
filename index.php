@@ -79,15 +79,15 @@ include("insert.php");
 
             <tr>
                 <td><label>Qualification:</label></td>
-                <td> <input type="checkbox" name="high_school" value="High_school">
+                <td> <input type="checkbox" name="high_school" value="High_school" <?php if($high_school=="High_school"){ echo "checked";}?>>
                     <label> High school</label>
-                    <input type="checkbox" name="intermediate_school" value="Intermediate_school">
+                    <input type="checkbox" name="intermediate_school" value="Intermediate_school" <?php if($intermediate_school=="Intermediate_school"){ echo "checked";}?>>
                     <label>Intermediate school</label>
-                    <input type="checkbox" name="diploma" value="Diploma">
+                    <input type="checkbox" name="diploma" value="Diploma"  <?php if($diploma=="Diploma"){ echo "checked";}?>>
                     <label> Diploma</label>
-                    <input type="checkbox" name="graduate" value="Graduate">
+                    <input type="checkbox" name="graduate" value="Graduate"  <?php if($graduate=="Graduate"){ echo "checked";}?>>
                     <label> Graduate</label>
-                    <input type="checkbox" name="masters" value="Masters">
+                    <input type="checkbox" name="masters" value="Masters"  <?php if($masters=="Masters"){ echo "checked";}?>>
                     <label>Masters</label></td>
             </tr>
             <tr>

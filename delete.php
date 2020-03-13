@@ -13,8 +13,9 @@ if(isset($_GET['id']))
 
 // sql to delete a record
 $sqldelete = "DELETE FROM employees WHERE id=$user_id";
+$sqldeletequalification="DELETE FROM qualification WHERE emp_id=$user_id";;
 
-if (mysqli_query($conn,$sqldelete) === TRUE) {
+if (mysqli_query($conn,$sqldelete) === TRUE && mysqli_query($conn,$sqldeletequalification)===True) {
     echo "Record deleted successfully";
     echo "<meta http-equiv='refresh' content='5'>";
 } else {

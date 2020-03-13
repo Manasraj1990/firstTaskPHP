@@ -1,31 +1,34 @@
 <?php
 include("delete.php");
-echo $massage;
 ?>
 
 <html>
+
 <head>
-<title>Users data</title>
-<style>
+    <title>Users data</title>
+    <style>
+    body {
+        background-color: #FFF0F5;
+    }
 
-body {
-    background-color: #FFF0F5;
-}
-input{
-    background-color: Red;
-}
-th, td {
-  border: 1px solid black;
-  text-align: left;
-}
+    input {
+        background-color: Red;
+    }
 
-table{
-  width:100%;
-  padding: 10px; 
-  box-shadow:5px 10px 8px #888888;
-}
-</style>
+    th,
+    td {
+        border: 1px solid black;
+        text-align: left;
+    }
+
+    table {
+        width: 100%;
+        padding: 10px;
+        box-shadow: 5px 10px 8px #888888;
+    }
+    </style>
 </head>
+
 <body>
     <?php
 
