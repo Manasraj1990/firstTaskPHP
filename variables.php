@@ -1,0 +1,20 @@
+<?php
+$user_id ='';
+$emp_Id='';
+$massage=''; 
+$firstname='';
+$lastname='';
+$emailid='';
+$mobileno='';
+$photo='';
+$gender=''; 
+$high_school='';
+$intermediate_school='';
+$diploma='';
+$graduate='';
+$masters='';
+$servername='localhost';
+$username='root';
+$password='manas98077raj';
+$dbname='prologictechnologies';
+?>
