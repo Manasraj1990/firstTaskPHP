@@ -1,6 +1,6 @@
 <?php
 $user_id ='';
-$emp_Id='';
+$emp_id='';
 $massage=''; 
 $firstname='';
 $lastname='';
@@ -17,4 +17,8 @@ $servername='localhost';
 $username='root';
 $password='manas98077raj';
 $dbname='prologictechnologies';
+$GLOBALS["poly"]="";
+$GLOBALS["btech"]="";
+$GLOBALS["mtech"]="";
+$GLOBALS["mba"]="";
 ?>

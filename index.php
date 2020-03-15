@@ -3,9 +3,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include("insert.php");
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -94,11 +91,12 @@ include("insert.php");
                 <td>
                     <lable>Degrees:</lable>
                 </td>
-                <td> <select name="degrees" multiple>
-                        <option value="Poly">Poly</option>
-                        <option value="B.tech">B.tech</option>
-                        <option value="MBA">MBA</option>
-                        <option value="M.tech">M.tech</option>
+                <td> <select name="degrees[]" multiple>
+                        <option value="Poly" <?php echo $GLOBALS["poly"]; ?>  >Poly</option>
+
+                        <option value="B.tech" <?php echo $GLOBALS["btech"]; ?> >B.tech</option>
+                        <option value="MBA" <?php echo $GLOBALS["mba"]; ?> >MBA</option>
+                        <option value="M.tech" <?php echo $GLOBALS["mtech"]; ?> >M.tech</option>
                     </select></td>
             </tr>
             <tr>

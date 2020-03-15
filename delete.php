@@ -1,4 +1,5 @@
 <?php
+
 if(isset($_GET['id']))
 {
   $user_id= base64_decode($_GET['id']);
@@ -6,12 +7,14 @@ if(isset($_GET['id']))
   $username='root';
   $password='manas98077raj';
   $dbname='prologictechnologies'; 
+try{
   $conn=mysqli_connect("$servername","$username","$password","$dbname");
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-}
+     }
 
 // sql to delete a record
+$conn->begin_Transaction();
 $sqldelete = "DELETE FROM employees WHERE id=$user_id";
 $sqldeletequalification="DELETE FROM qualification WHERE emp_id=$user_id";;
 
@@ -21,8 +24,20 @@ if (mysqli_query($conn,$sqldelete) === TRUE && mysqli_query($conn,$sqldeletequal
 } else {
     echo "Error deleting record: " . mysqli_error($conn);
 }
+$conn->commit();
+}
+catch(Exception $e)
+{
+    
+    $conn->rollBack();
+    echo $e->getMessage();
 
-mysqli_close($conn);
+}
+finally
+{
+    mysqli_close($conn);
+
+}
 
 }
 ?>
