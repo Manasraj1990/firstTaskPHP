@@ -16,9 +16,11 @@ try{
 // sql to delete a record
 $conn->begin_Transaction();
 $sqldelete = "DELETE FROM employees WHERE id=$user_id";
-$sqldeletequalification="DELETE FROM qualification WHERE emp_id=$user_id";;
+$sqldeletequalification="DELETE FROM qualification WHERE emp_id=$user_id";
+$sqldeleteempdegrees= "DELETE FROM empdegrees WHERE emp_id='$user_id'";
+  
 
-if (mysqli_query($conn,$sqldelete) === TRUE && mysqli_query($conn,$sqldeletequalification)===True) {
+if (mysqli_query($conn,$sqldelete) === TRUE && mysqli_query($conn,$sqldeletequalification)===True && mysqli_query($conn,$sqldeleteempdegrees) ) {
     echo "Record deleted successfully";
     echo "<meta http-equiv='refresh' content='5'>";
 } else {

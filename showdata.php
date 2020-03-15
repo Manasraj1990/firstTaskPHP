@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include("delete.php");
 ?>
 
@@ -36,7 +39,9 @@ $servername='localhost';
 $username='root';
 $password='manas98077raj';
 $dbname='prologictechnologies';
+try{
 $conn=mysqli_connect("$servername","$username","$password","$dbname");
+$conn->begin_Transaction();
 $sqlselect = "SELECT * FROM employees";
   
 echo '<table >
@@ -47,7 +52,9 @@ echo '<table >
           <th> <font face="Arial">Email</font> </th> 
           <th> <font face="Arial">Mobile Number</font> </th> 
           <th> <font face="Arial">Photo</font> </th> 
-          <th> <font face="Arial">Gender</font> </th> 
+          <th> <font face="Arial">Gender</font> </th>
+          <th> <font face="Arial">Qualification</font> </th>
+          <th> <font face="Arial">Degrees</font> </th>
           <th> <font face="Arial">Edit</font> </th> 
           <th> <font face="Arial">Delete</font> </th>   
       </tr>';
@@ -70,14 +77,22 @@ if ($result=mysqli_query($conn,$sqlselect)) {
                   <td>'.$field5name.'</td> 
                   <td>'.$field6name.'</td> 
                   <td>'.$field7name.'</td>
+                  <td><a href=showDataQUalificationDegrees.php?id='.base64_encode($field1name).'>Qualification</a></td>
+                  <td><a href=showDataDegrees.php?id='.base64_encode($field1name).'>Degrees</a></td>
                   <td><a href=index.php?id='.base64_encode($field1name).'>Edit</a></td>
                   <td><a href=showdata.php?id='.base64_encode($field1name).'>Delete</a></td>
                     </tr>';
     }
     mysqli_free_result($result);
 }
-
-mysqli_close($conn); 
+$conn->commit();
+}
+catch(Exception $e){
+    $conn->rollBack();
+    echo $e->getMessage();
+}
+finally{
+    mysqli_close($conn);} 
 ?>
 </body>
 
