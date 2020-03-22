@@ -1,128 +1,165 @@
 <?php
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-include("insert.php");
+require_once("delete.php");
+?>
+<?php
+ if (isset($_GET['iID'])){
+    echo "<p>Update data</p>";  
+}
 ?>
 
-<!DOCTYPE html>
 <html>
 
 <head>
-    <title>insert form</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Users data</title>
+    <style>
+    body {
+        background-color: #FFF0F5;
+    }
+
+    input {
+        background-color: Red;
+    }
+    th{
+        border: 1px solid black;
+        text-align: center;
+    }
+    td {
+        border: 1px solid black;   
+        text-align: center;
+    }
+    .button {
+    display: block;
+    width: 150px;
+    height: 25px;
+    background: #4E9CAF;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    }
+    .butUpdate {
+    display: block;
+    width: 100px;
+    height: 20px;
+    background: green;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    }
+    .butDelete {
+    display: block;
+    width: 100px;
+    height: 20px;
+    background: red;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    }
+a{text-decoration: none;}
+
+    table {
+        width: 100%;
+        padding: 10px;
+        box-shadow: 5px 10px 8px #888888;
+    }
+    </style>
 </head>
 
 <body>
 
-    <form action="" method="post" enctype="multipart/form-data">
-        <table style=" border: 1px solid;padding: 50px;box-shadow: 5px 10px 8px #888888;padding: 50px;">
-            <tr> <?php
-      if(isset($_POST['Edit'])){
-          ?>
-                <h1>Update Detail</h1>
-                <?php
 
-      }
-      else{
-        ?>
-                <h1>Insert</h1>
+<?php
+try{
+        $field13name="";    
+        $servername='localhost';
+        $username='root';
+        $password='manas98077raj';
+        $dbname='prologictechnologies';
+        $conn=mysqli_connect("$servername","$username","$password","$dbname");
+        $sqlselect ="SELECT employees.id,employees.firstname,employees.lastname,employees.emailid,employees.mobileno,
+        employees.photo,employees.gender,qualification.high_school, qualification.intermediate_school,qualification.diploma,qualification.graduate,qualification.masters,GROUP_CONCAT(course) 
+        as course FROM employees inner join qualification on employees.id= qualification.emp_id inner join empdegrees 
+        on employees.id = empdegrees.emp_id group by empdegrees.emp_id";
+        $select_result= mysqli_query($conn,$sqlselect);
+        
+        echo '<table >
+            <tr> 
+                <th> <font face="Arial">ID</font> </th> 
+                <th> <font face="Arial">First Name</font> </th> 
+                <th> <font face="Arial">Last Name</font> </th> 
+                <th> <font face="Arial">Email</font> </th> 
+                <th> <font face="Arial">Mobile Number</font> </th> 
+                <th> <font face="Arial">Photo</font> </th> 
+                <th> <font face="Arial">Gender</font> </th>
+                <th > <font face="Arial">Qualification</font> </th>
+                <th> <font face="Arial">course</font> </th>
+                <th> <font face="Arial">Edit</font> </th> 
+                <th> <font face="Arial">Delete</font> </th> 
 
-                <?php
-      }
-  ?></tr>
-
-
-
-            <tr>
-                <td><input type="hidden" name="id" value="<?php echo $user_id ; ?>"></td>
-            </tr>
-            <tr>
-                <td><label>First name:</label></td>
-                <td><input type="text" name="fname" value="<?php echo $firstname ; ?>"></td>
-            </tr>
-
-            <tr>
-                <td><label>Last name:</label></td>
-                <td><input type="text" name="lname" value="<?php echo $lastname ; ?>"></td>
-            </tr>
-
-            <tr>
-                <td><label>Email ID:</label></td>
-                <td><input type="Email" name="emailid" value="<?php echo $emailid ; ?>"></td>
-            </tr>
-
-            <tr>
-                <td><label> Mobile Number:</label></td>
-                <td><input type="number" name="mobno" value="<?php echo $mobileno ;?>"></td>
-            </tr>
-
-            <tr>
-                <td><label>Photo:</label></td>
-                <td><input type="file" name="photo" value="<?php echo $photo ;?>">
-                    <img width="60px" height="100px" src="./uplodedimages/<?php echo $photo ?>" alt="sorry"></td>
-            </tr>
-
-            <tr>
-                <td><label>Gender:</label></td>
-                <td><input type="radio" name="gender" value="male" <?php if( $gender=="male"){ echo "checked";}?>>
-                    <label for="male">Male</label>
-                    <input type="radio" name="gender" value="female" <?php if( $gender=="female"){ echo "checked";}?>>
-                    <label for="female">Female</label>
-                    <input type="radio" name="gender" value="other" <?php if( $gender=="other"){ echo "checked";}?>>
-                    <label for="other">Other</label></td>
-            </tr>
-
-
-            <tr>
-                <td><label>Qualification:</label></td>
-                <td> <input type="checkbox" name="high_school" value="High_school" <?php if($high_school=="High_school"){ echo "checked";}?>>
-                    <label> High school</label>
-                    <input type="checkbox" name="intermediate_school" value="Intermediate_school" <?php if($intermediate_school=="Intermediate_school"){ echo "checked";}?>>
-                    <label>Intermediate school</label>
-                    <input type="checkbox" name="diploma" value="Diploma"  <?php if($diploma=="Diploma"){ echo "checked";}?>>
-                    <label> Diploma</label>
-                    <input type="checkbox" name="graduate" value="Graduate"  <?php if($graduate=="Graduate"){ echo "checked";}?>>
-                    <label> Graduate</label>
-                    <input type="checkbox" name="masters" value="Masters"  <?php if($masters=="Masters"){ echo "checked";}?>>
-                    <label>Masters</label></td>
-            </tr>
-            <tr>
-                <td>
-                    <lable>Degrees:</lable>
-                </td>
-                <td> <select name="degrees[]" multiple>
-                        <option value="Poly" <?php echo $GLOBALS["poly"]; ?>  >Poly</option>
-
-                        <option value="B.tech" <?php echo $GLOBALS["btech"]; ?> >B.tech</option>
-                        <option value="MBA" <?php echo $GLOBALS["mba"]; ?> >MBA</option>
-                        <option value="M.tech" <?php echo $GLOBALS["mtech"]; ?> >M.tech</option>
-                    </select></td>
-            </tr>
-            <tr>
-                <td><input type="submit" name="<?php
-     if(isset($_GET['id'])){
-         echo "Update";
-     }
-     else{
-         echo "Submit";
+            </tr>';
+            mysqli_num_rows($select_result) > 0 or error(mysqli_error($conn));
+            while ($row1 = mysqli_fetch_assoc($select_result)) {
+                    $field1name = $row1["id"];
+                    $field2name = $row1["firstname"];
+                    $field3name = $row1["lastname"];
+                    $field4name = $row1["emailid"];
+                    $field5name = $row1["mobileno"];
+                    $field6name = $row1["photo"]; 
+                    $field7name = $row1["gender"]; 
+                    $field8name = $row1["high_school"];
+                    $field9name = $row1["intermediate_school"];
+                    $field10name = $row1["diploma"];
+                    $field11name = $row1["graduate"];
+                    $field12name = $row1["masters"];
+                    $field13name = $row1["course"];
+                    $str="";
+                    if($field8name== "High_school"){
+                        $str=$str.$field8name.",";
+                    }
+                    if($field9name=="Intermediate_school"){
+                        $str=$str. $field9name.",";
+                    }
+                    if($field10name=="Diploma"){
+                        $str=$str. $field10name.",";
+                    }
+                    if($field11name=="Graduate"){
+                        $str=$str.$field11name.",";
+                    }
+                    if($field12name=="Masters"){
+                        $str=$str.$field12name.",";
+                    }
+                    echo '<tr> 
+                    <td>'.$field1name.'</td> 
+                    <td>'.$field2name.'</td> 
+                    <td>'.$field3name.'</td> 
+                    <td>'.$field4name.'</td> 
+                    <td>'.$field5name.'</td> 
+                    <td>'.$field6name.'</td> 
+                    <td>'.$field7name.'</td>
+                    <td>'.rtrim($str,",").'</td>
+                    <td>'.$field13name.'</td>
+                    <td><a class=butUpdate href=insertform.php?id='.base64_encode($field1name).'>Update</a></td>
+                    <td><a class=butDelete href=index.php?id='.base64_encode($field1name).'>Delete</a></td></tr>';       
             }
-     ?>" value="<?php
-     if(isset($_GET['id'])){
-         echo "Update";
-     }
-     else{
-         echo "Save";
-            }
-     ?>
-     "></td>
+            echo '</br><a class=button href=insertform.php> Add Employee </a><br/>';
+}      
+catch(Exception $e){
+    
+    echo $e->getMessage();
+}
+finally{
+    mysqli_close($conn);
+} 
+?>
+</body>
 
-                <td><span><?php echo $massage; ?></span></td>
-            </tr>
-
-            <tr>
-                <td><input type="submit" name="showinfo" formaction="showdata.php" value="Check Data"></td>
-            </tr>
-
-        </table>
-    </form>   
+</html>
